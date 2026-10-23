@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MJ Surgical - Product Catalogs & Brochures</title>
+
+    <!-- PDF.js for rendering PDF page 1 preview images -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
     <style>
         :root {
             --brand-teal: #5ca595;
+            --dark-bg: #121c20;
             --card-bg: #ffffff;
         }
 
@@ -18,91 +23,187 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
+            background-color: #eef3f2;
             color: #333;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100vh;
-            padding: 40px 20px;
+            height: 100vh;
+            overflow: hidden;
+            padding: 20px 10px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-top: 10px;
         }
 
         header h1 {
             color: var(--brand-teal);
-            font-size: 32px;
+            font-size: 28px;
             letter-spacing: 1.5px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         header p {
             color: #666;
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+        /* Carousel Outer Container */
+        .slider-stage {
+            position: relative;
             width: 100%;
-            max-width: 1200px;
-        }
-
-        .catalog-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            max-width: 900px;
+            height: 72vh;
+            max-height: 620px;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            border-top: 4px solid var(--brand-teal);
+            align-items: center;
+            justify-content: center;
         }
 
-        .catalog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(92, 165, 149, 0.2);
+        /* Slide Card Styling */
+        .catalog-card {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            padding: 25px;
+            border-top: 6px solid var(--brand-teal);
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .catalog-card.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.97); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* PDF Cover Image Wrapper */
+        .cover-preview-wrapper {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8faf9;
+            border-radius: 10px;
+            border: 1px solid #e2e8e6;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .cover-canvas {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .catalog-card h3 {
-            font-size: 18px;
-            color: #222;
-            margin-bottom: 10px;
+            font-size: 20px;
+            color: #111;
+            margin-top: 5px;
         }
 
         .catalog-card p {
             font-size: 13px;
             color: #666;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            line-height: 1.4;
+            max-width: 600px;
         }
 
         .btn-view {
             display: inline-block;
-            text-align: center;
             background-color: var(--brand-teal);
             color: #ffffff;
             text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 20px;
+            padding: 12px 28px;
+            border-radius: 25px;
             font-weight: bold;
-            font-size: 12px;
-            transition: background 0.2s ease;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(92, 165, 149, 0.3);
         }
 
         .btn-view:hover {
             background-color: #488a7b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(92, 165, 149, 0.4);
+        }
+
+        /* Navigation Arrows */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(18, 28, 32, 0.75);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .slider-btn:hover {
+            background: var(--brand-teal);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #prev-slide { left: -25px; }
+        #next-slide { right: -25px; }
+
+        /* Slide Dots Indicator */
+        .dots-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dot.active {
+            background: var(--brand-teal);
+            width: 24px;
+            border-radius: 10px;
         }
 
         footer {
-            margin-top: 50px;
+            margin-bottom: 10px;
             font-size: 12px;
             color: #888;
+        }
+
+        @media (max-width: 768px) {
+            #prev-slide { left: 5px; }
+            #next-slide { right: 5px; }
+            .slider-stage { height: 75vh; }
         }
     </style>
 </head>
@@ -113,56 +214,140 @@
         <p>Interactive 3D Product Catalogs & Brochures</p>
     </header>
 
-    <div class="catalog-grid">
-        <!-- 1. Arthroscopy -->
-        <div class="catalog-card">
-            <div>
-                <h3>Arthroscopy Implants and Instrument Brochure</h3>
-                <p>Complete range of arthroscopic equipment and instruments.</p>
+    <!-- Main Carousel Stage -->
+    <div class="slider-stage">
+        <button id="prev-slide" class="slider-btn" onclick="moveSlide(-1)">&#10094;</button>
+
+        <!-- Slide 1: Arthroscopy -->
+        <div class="catalog-card active" data-pdf="./arthroscopy/document.pdf">
+            <h3>Arthroscopy Implants & Instrument Brochure</h3>
+            <div class="cover-preview-wrapper">
+                <canvas class="cover-canvas"></canvas>
             </div>
+            <p>Complete range of arthroscopic equipment and precision instruments.</p>
             <a href="./arthroscopy/" class="btn-view">Open 3D Brochure →</a>
         </div>
 
-        <!-- 2. Cranial-Maxillofacial -->
-        <div class="catalog-card">
-            <div>
-                <h3>Cranial-Maxillofacial Implants and Instruments</h3>
-                <p>CMF mini plates, mesh systems, and surgical tools.</p>
+        <!-- Slide 2: Cranial-Maxillofacial -->
+        <div class="catalog-card" data-pdf="./cranial-maxillofacial/document.pdf">
+            <h3>Cranial-Maxillofacial Implants & Instruments</h3>
+            <div class="cover-preview-wrapper">
+                <canvas class="cover-canvas"></canvas>
             </div>
+            <p>CMF mini plates, mesh systems, and specialized trauma tools.</p>
             <a href="./cranial-maxillofacial/" class="btn-view">Open 3D Brochure →</a>
         </div>
 
-        <!-- 3. Hip Replacement -->
-        <div class="catalog-card">
-            <div>
-                <h3>Hip Replacement Implants and Instruments</h3>
-                <p>Total hip replacement systems, stems, and cups.</p>
+        <!-- Slide 3: Hip Replacement -->
+        <div class="catalog-card" data-pdf="./hip-replacement/document.pdf">
+            <h3>Hip Replacement Implants & Instruments</h3>
+            <div class="cover-preview-wrapper">
+                <canvas class="cover-canvas"></canvas>
             </div>
+            <p>Total hip replacement systems, femoral stems, and acetabular cups.</p>
             <a href="./hip-replacement/" class="btn-view">Open 3D Brochure →</a>
         </div>
 
-        <!-- 4. Spine Implants -->
-        <div class="catalog-card">
-            <div>
-                <h3>Spine Implants & Instruments Brochure</h3>
-                <p>Pedicle screw systems, cervical cages, and spine tools.</p>
+        <!-- Slide 4: Spine Implants -->
+        <div class="catalog-card" data-pdf="./spine-implants/document.pdf">
+            <h3>Spine Implants & Instruments Brochure</h3>
+            <div class="cover-preview-wrapper">
+                <canvas class="cover-canvas"></canvas>
             </div>
+            <p>Pedicle screw systems, cervical cages, and spinal fixation instruments.</p>
             <a href="./spine-implants/" class="btn-view">Open 3D Brochure →</a>
         </div>
 
-        <!-- 5. Trauma Implants -->
-        <div class="catalog-card">
-            <div>
-                <h3>Trauma Implants Brochures</h3>
-                <p>Anatomical trauma plates, nails, and locking screws.</p>
+        <!-- Slide 5: Trauma Implants -->
+        <div class="catalog-card" data-pdf="./trauma-implants/document.pdf">
+            <h3>Trauma Implants Brochures</h3>
+            <div class="cover-preview-wrapper">
+                <canvas class="cover-canvas"></canvas>
             </div>
+            <p>Anatomical trauma plates, intramedullary nails, and locking screws.</p>
             <a href="./trauma-implants/" class="btn-view">Open 3D Brochure →</a>
         </div>
+
+        <button id="next-slide" class="slider-btn" onclick="moveSlide(1)">&#10095;</button>
     </div>
+
+    <!-- Navigation Dots -->
+    <div class="dots-container" id="dots-container"></div>
 
     <footer>
         © 2026 MJ Surgical. All rights reserved.
     </footer>
 
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.catalog-card');
+        const dotsContainer = document.getElementById('dots-container');
+
+        // Build navigation dots
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = `dot ${index === 0 ? 'active' : ''}`;
+            dot.onclick = () => goToSlide(index);
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function updateSlideDisplay() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+                dots[index].classList.toggle('active', index === currentSlide);
+            });
+            renderSlideCover(currentSlide);
+        }
+
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            updateSlideDisplay();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlideDisplay();
+        }
+
+        // Render Page 1 Cover Preview for the active slide
+        async function renderSlideCover(slideIndex) {
+            const slide = slides[slideIndex];
+            const pdfUrl = slide.getAttribute('data-pdf');
+            const canvas = slide.querySelector('.cover-canvas');
+
+            if (canvas.getAttribute('data-rendered') === 'true') return;
+
+            try {
+                const loadingTask = pdfjsLib.getDocument(pdfUrl);
+                const pdfDoc = await loadingTask.promise;
+                const page = await pdfDoc.getPage(1);
+
+                const viewport = page.getViewport({ scale: 1.0 });
+                const context = canvas.getContext('2d');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                await page.render({ canvasContext: context, viewport: viewport }).promise;
+                canvas.setAttribute('data-rendered', 'true');
+            } catch (err) {
+                console.warn('Could not render cover preview for ' + pdfUrl, err);
+            }
+        }
+
+        // Keyboard Arrow Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') moveSlide(1);
+            if (e.key === 'ArrowLeft') moveSlide(-1);
+        });
+
+        // Initialize first cover rendering on load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSlideCover(0);
+        });
+    </script>
 </body>
 </html>
