@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJ Surgical - Product Catalogs & Brochures</title>
+    <style>
+        :root {
+            --brand-teal: #5ca595;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: var(--brand-teal);
+            font-size: 32px;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .catalog-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border-top: 4px solid var(--brand-teal);
+        }
+
+        .catalog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(92, 165, 149, 0.2);
+        }
+
+        .catalog-card h3 {
+            font-size: 18px;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        .catalog-card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .btn-view {
+            display: inline-block;
+            text-align: center;
+            background-color: var(--brand-teal);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-view:hover {
+            background-color: #488a7b;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MJ SURGICAL</h1>
+        <p>Interactive 3D Product Catalogs & Brochures</p>
+    </header>
+
+    <div class="catalog-grid">
+        <!-- 1. Arthroscopy -->
+        <div class="catalog-card">
+            <div>
+                <h3>Arthroscopy Implants and Instrument Brochure</h3>
+                <p>Complete range of arthroscopic equipment and instruments.</p>
+            </div>
+            <a href="./arthroscopy/" class="btn-view">Open 3D Brochure →</a>
+        </div>
+
+        <!-- 2. Cranial-Maxillofacial -->
+        <div class="catalog-card">
+            <div>
+                <h3>Cranial-Maxillofacial Implants and Instruments</h3>
+                <p>CMF mini plates, mesh systems, and surgical tools.</p>
+            </div>
+            <a href="./cranial-maxillofacial/" class="btn-view">Open 3D Brochure →</a>
+        </div>
+
+        <!-- 3. Hip Replacement -->
+        <div class="catalog-card">
+            <div>
+                <h3>Hip Replacement Implants and Instruments</h3>
+                <p>Total hip replacement systems, stems, and cups.</p>
+            </div>
+            <a href="./hip-replacement/" class="btn-view">Open 3D Brochure →</a>
+        </div>
+
+        <!-- 4. Spine Implants -->
+        <div class="catalog-card">
+            <div>
+                <h3>Spine Implants & Instruments Brochure</h3>
+                <p>Pedicle screw systems, cervical cages, and spine tools.</p>
+            </div>
+            <a href="./spine-implants/" class="btn-view">Open 3D Brochure →</a>
+        </div>
+
+        <!-- 5. Trauma Implants -->
+        <div class="catalog-card">
+            <div>
+                <h3>Trauma Implants Brochures</h3>
+                <p>Anatomical trauma plates, nails, and locking screws.</p>
+            </div>
+            <a href="./trauma-implants/" class="btn-view">Open 3D Brochure →</a>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 MJ Surgical. All rights reserved.
+    </footer>
+
+</body>
+</html>
