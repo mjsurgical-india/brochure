@@ -38,7 +38,7 @@
 
         header {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 5px;
             z-index: 10;
         }
 
@@ -54,17 +54,17 @@
             font-size: 14px;
         }
 
-        /* 3D Carousel Stage - 10% Larger Dimensions */
+        /* Expanded 3D Carousel Stage */
         .carousel-stage {
             position: relative;
             width: 100%;
-            max-width: 1100px;
-            height: 72vh;
-            max-height: 620px;
+            max-width: 1250px;
+            height: 75vh;
+            max-height: 650px;
             display: flex;
             align-items: center;
             justify-content: center;
-            perspective: 1000px;
+            perspective: 1100px;
             margin: 10px 0;
         }
 
@@ -77,16 +77,16 @@
             justify-content: center;
         }
 
-        /* 3D Cards (+10% Larger Width & Padding) */
+        /* Significantly Larger Box Width & Height */
         .catalog-card {
             position: absolute;
-            width: 355px;
-            max-width: 85vw;
+            width: 420px;
+            max-width: 88vw;
             height: 100%;
             background: var(--card-bg);
-            border-radius: 18px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            padding: 22px 20px;
+            border-radius: 20px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+            padding: 24px 22px;
             border-top: 6px solid var(--brand-teal);
             display: flex;
             flex-direction: column;
@@ -106,28 +106,28 @@
             pointer-events: auto;
             transform: translateX(0) scale(1) translateZ(0);
             z-index: 5;
-            box-shadow: 0 20px 45px rgba(92, 165, 149, 0.28);
+            box-shadow: 0 22px 50px rgba(92, 165, 149, 0.32);
         }
 
         /* Left Side Card */
         .catalog-card.prev {
-            opacity: 0.55;
+            opacity: 0.5;
             pointer-events: auto;
-            transform: translateX(-62%) scale(0.82) rotateY(15deg);
+            transform: translateX(-58%) scale(0.8) rotateY(14deg);
             z-index: 3;
             cursor: pointer;
         }
 
         /* Right Side Card */
         .catalog-card.next {
-            opacity: 0.55;
+            opacity: 0.5;
             pointer-events: auto;
-            transform: translateX(62%) scale(0.82) rotateY(-15deg);
+            transform: translateX(58%) scale(0.8) rotateY(-14deg);
             z-index: 3;
             cursor: pointer;
         }
 
-        /* PDF Cover Image Wrapper */
+        /* PDF Cover Image Box */
         .cover-preview-wrapper {
             width: 100%;
             flex: 1;
@@ -135,8 +135,8 @@
             justify-content: center;
             align-items: center;
             background: rgba(0,0,0,0.25);
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 12px;
+            padding: 12px;
             margin: 12px 0;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.08);
@@ -149,11 +149,11 @@
             height: auto;
             object-fit: contain;
             border-radius: 4px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.45);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
 
         .catalog-card h3 {
-            font-size: 17px;
+            font-size: 19px;
             color: #ffffff;
             margin-top: 2px;
             line-height: 1.3;
@@ -161,7 +161,7 @@
         }
 
         .catalog-card p {
-            font-size: 12px;
+            font-size: 13px;
             color: #a0aec0;
             line-height: 1.4;
         }
@@ -171,12 +171,12 @@
             background-color: var(--brand-teal);
             color: #ffffff;
             text-decoration: none;
-            padding: 11px 26px;
-            border-radius: 22px;
+            padding: 12px 28px;
+            border-radius: 24px;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 14px;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 14px rgba(92, 165, 149, 0.35);
+            box-shadow: 0 4px 15px rgba(92, 165, 149, 0.38);
         }
 
         .btn-view:hover {
@@ -184,7 +184,7 @@
             transform: translateY(-2px);
         }
 
-        /* Arrow Navigation */
+        /* Navigation Arrows */
         .slider-btn {
             position: absolute;
             top: 50%;
@@ -192,10 +192,10 @@
             background: rgba(255, 255, 255, 0.18);
             color: white;
             border: none;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
             z-index: 99;
             display: flex;
@@ -245,11 +245,13 @@
 
         @media (max-width: 768px) {
             .carousel-stage { height: 75vh; }
-            .catalog-card { width: 300px; padding: 16px 14px; }
-            .catalog-card.prev { transform: translateX(-38%) scale(0.78); opacity: 0.22; }
-            .catalog-card.next { transform: translateX(38%) scale(0.78); opacity: 0.22; }
+            .catalog-card { width: 310px; padding: 16px 14px; }
+            .catalog-card.prev { transform: translateX(-35%) scale(0.76); opacity: 0.2; }
+            .catalog-card.next { transform: translateX(35%) scale(0.76); opacity: 0.2; }
             #prev-slide { left: 2px; width: 40px; height: 40px; font-size: 18px; }
             #next-slide { right: 2px; width: 40px; height: 40px; font-size: 18px; }
+            .catalog-card h3 { font-size: 16px; }
+            .btn-view { padding: 10px 22px; font-size: 12px; }
         }
     </style>
 </head>
