@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- CHANGE TITLE PER FOLDER -->
+    <!-- UPDATE TITLE FOR EACH FOLDER -->
     <title>MJ Surgical - Spine Implants & Instruments</title>
 
     <!-- Page-Flip 3D Engine -->
@@ -13,8 +13,8 @@
 
     <style>
         :root {
-            --outer-bg: #1a1a1a;     /* Dark outer background default */
-            --inner-bg: #5ca595;     /* Teal inner stage default */
+            --outer-bg: #1a1a1a;
+            --inner-bg: #5ca595;
         }
 
         * {
@@ -37,22 +37,59 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Top Control Panel - Responsive & Scrollable on Mobile */
-        #control-panel {
+        /* Top Bar Container */
+        #top-bar {
             position: absolute;
-            top: 8px;
-            background: rgba(0, 0, 0, 0.85);
-            padding: 5px 12px;
+            top: 10px;
+            left: 0;
+            width: 100vw;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        /* Far Top-Left Home Button CTA */
+        .btn-home {
+            pointer-events: auto;
+            background: rgba(45, 55, 72, 0.95);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
             border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
-            z-index: 9999;
+            gap: 5px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-home:hover {
+            background: #4a5568;
+            transform: scale(1.05);
+        }
+
+        /* Top Center Control Panel */
+        #control-panel {
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 6px 16px;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             color: #fff;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
-            max-width: 95vw;
+            max-width: 80vw;
             overflow-x: auto;
             white-space: nowrap;
         }
@@ -60,46 +97,37 @@
         .control-group {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
         }
 
         .control-panel-divider {
             width: 1px;
-            height: 16px;
+            height: 18px;
             background: rgba(255, 255, 255, 0.3);
             flex-shrink: 0;
         }
 
-        .btn-theme {
+        /* Enlarged CTA Buttons */
+        .btn-cta {
             background: #ffffff;
             color: #222;
             border: none;
-            padding: 4px 10px;
-            border-radius: 10px;
+            padding: 6px 14px;
+            border-radius: 14px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 10px;
+            font-size: 12px;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
             text-decoration: none;
             flex-shrink: 0;
         }
 
-        .btn-theme:hover {
+        .btn-cta:hover {
             transform: scale(1.05);
             background: #e0e0e0;
-        }
-
-        .btn-home {
-            background: #2d3748;
-            color: #ffffff;
-        }
-
-        .btn-home:hover {
-            background: #4a5568;
-            color: #ffffff;
         }
 
         .btn-download {
@@ -112,7 +140,7 @@
             color: #ffffff;
         }
 
-        /* Stage Box Optimized for Mobile and Desktop */
+        /* Responsive Stage Box */
         #flipbook-stage {
             width: 96vw;
             height: 85vh;
@@ -152,10 +180,10 @@
             background: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
             z-index: 999;
             display: flex;
@@ -173,7 +201,7 @@
         #prev-btn { left: 8px; }
         #next-btn { right: 8px; }
 
-        /* Loading Screen */
+        /* Loading Spinner */
         #loading-screen {
             position: absolute;
             display: flex;
@@ -191,8 +219,8 @@
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid #ffffff;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
 
@@ -207,49 +235,45 @@
         }
 
         @media (max-width: 768px) {
-            #flipbook-stage {
-                width: 98vw;
-                height: 82vh;
-                padding: 5px 15px;
-            }
-            .nav-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 14px;
-            }
+            #top-bar { padding: 0 8px; }
+            .btn-home { padding: 6px 12px; font-size: 11px; }
+            #control-panel { max-width: 70vw; padding: 4px 10px; gap: 8px; }
+            .btn-cta { padding: 5px 10px; font-size: 11px; }
+            #flipbook-stage { width: 98vw; height: 82vh; padding: 5px 10px; }
+            .nav-btn { width: 34px; height: 34px; font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Control Panel -->
-    <div id="control-panel">
-        <!-- Home Button -->
-        <a href="../" class="btn-theme btn-home">← Home</a>
+    <!-- Top Bar Layer -->
+    <div id="top-bar">
+        <!-- Far Top-Left Home CTA -->
+        <a href="../" class="btn-home">← Home</a>
 
-        <div class="control-panel-divider"></div>
+        <!-- Center Controls -->
+        <div id="control-panel">
+            <div class="control-group">
+                <span>Inner Stage:</span>
+                <button class="btn-cta" onclick="setInnerBg('#5ca595')">Teal</button>
+                <button class="btn-cta" onclick="setInnerBg('#ffffff')">White</button>
+                <button class="btn-cta" onclick="setInnerBg('#2b2b2b')">Dark</button>
+            </div>
 
-        <div class="control-group">
-            <span>Inner Stage:</span>
-            <button class="btn-theme" onclick="setInnerBg('#5ca595')">Teal</button>
-            <button class="btn-theme" onclick="setInnerBg('#ffffff')">White</button>
-            <button class="btn-theme" onclick="setInnerBg('#2b2b2b')">Dark</button>
+            <div class="control-panel-divider"></div>
+
+            <button class="btn-cta btn-download" onclick="downloadPDF()">📥 Download</button>
+            <button class="btn-cta" onclick="toggleFullscreen()">⛶ Fullscreen</button>
         </div>
 
-        <div class="control-panel-divider"></div>
-
-        <!-- Download PDF Button -->
-        <button class="btn-theme btn-download" onclick="downloadPDF()">📥 Download</button>
-
-        <button class="btn-theme" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+        <div></div> <!-- Spacer for flex alignment -->
     </div>
 
-    <!-- Main Stage Box -->
+    <!-- Main Stage -->
     <div id="flipbook-stage">
         <button id="prev-btn" class="nav-btn" title="Previous Page">&#10094;</button>
         <button id="next-btn" class="nav-btn" title="Next Page">&#10095;</button>
 
-        <!-- Loading Screen -->
         <div id="loading-screen">
             <div class="spinner"></div>
             <span id="loading-text">LOADING BROCHURE...</span>
@@ -261,12 +285,12 @@
     </div>
 
     <script>
-        // Set Default PDF Download Name per Folder:
-        // arthroscopy/index.html -> "Arthroscopy Implants and Instruments.pdf"
-        // cranial-maxillofacial/index.html -> "Cranial-Maxillofacial Implants and Instruments.pdf"
-        // hip-replacement/index.html -> "Hip Replacement Implants and Instruments.pdf"
-        // spine-implants/index.html -> "Spine Implants & Instruments.pdf"
-        // trauma-implants/index.html -> "Trauma Implants.pdf"
+        // SET SPECIFIC DOWNLOAD FILENAME AND TITLE FOR EACH SUBFOLDER:
+        // arthroscopy/ -> "Arthroscopy Implants and Instruments.pdf"
+        // cranial-maxillofacial/ -> "Cranial-Maxillofacial Implants and Instruments.pdf"
+        // hip-replacement/ -> "Hip Replacement Implants and Instruments.pdf"
+        // spine-implants/ -> "Spine Implants & Instruments.pdf"
+        // trauma-implants/ -> "Trauma Implants.pdf"
         const downloadName = "Spine Implants & Instruments.pdf";
 
         function setInnerBg(color) {
@@ -320,10 +344,8 @@
                 const stage = document.getElementById('flipbook-stage');
                 const isMobile = window.innerWidth <= 768;
                 
-                // Responsive sizing bounds
                 const availHeight = stage.clientHeight - 20;
-                // On mobile, show single page view for readability; on desktop, dual spread
-                const availWidth = isMobile ? (stage.clientWidth - 30) : ((stage.clientWidth - 60) / 2);
+                const availWidth = isMobile ? (stage.clientWidth - 25) : ((stage.clientWidth - 60) / 2);
 
                 const scale = Math.min(availHeight / unscaledViewport.height, availWidth / unscaledViewport.width);
 
@@ -359,7 +381,7 @@
                 globalPageFlip = new St.PageFlip(bookContainer, {
                     width: displayWidth,
                     height: displayHeight,
-                    size: isMobile ? "fixed" : "fixed",
+                    size: "fixed",
                     minWidth: 220,
                     maxWidth: 850,
                     minHeight: 300,
@@ -369,7 +391,6 @@
                     mobileScrollSupport: false,
                     useMouse: true,
                     flippingTime: 800,
-                    // Force single page on mobile screens for perfect readability
                     display: isMobile ? "single" : "double"
                 });
 
