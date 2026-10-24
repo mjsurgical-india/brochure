@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CHANGE TITLE & DOWNLOAD NAME FOR EACH FOLDER -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- CHANGE TITLE PER FOLDER -->
     <title>MJ Surgical - Cranial-Maxillofacial Implants and Instruments</title>
 
     <!-- Page-Flip 3D Engine -->
@@ -13,8 +13,8 @@
 
     <style>
         :root {
-            --outer-bg: #ffffff;
-            --inner-bg: #5ca595;
+            --outer-bg: #1a1a1a;     /* Dark outer background default */
+            --inner-bg: #5ca595;     /* Teal inner stage default */
         }
 
         * {
@@ -37,54 +37,69 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Top Control Panel */
+        /* Top Control Panel - Responsive & Scrollable on Mobile */
         #control-panel {
             position: absolute;
-            top: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 6px 16px;
-            border-radius: 25px;
+            top: 8px;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 5px 12px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             z-index: 9999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             color: #fff;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
+            max-width: 95vw;
+            overflow-x: auto;
+            white-space: nowrap;
         }
 
         .control-group {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .control-panel-divider {
             width: 1px;
-            height: 18px;
+            height: 16px;
             background: rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
         }
 
         .btn-theme {
             background: #ffffff;
             color: #222;
             border: none;
-            padding: 5px 12px;
-            border-radius: 12px;
+            padding: 4px 10px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 10px;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
         .btn-theme:hover {
             transform: scale(1.05);
             background: #e0e0e0;
+        }
+
+        .btn-home {
+            background: #2d3748;
+            color: #ffffff;
+        }
+
+        .btn-home:hover {
+            background: #4a5568;
+            color: #ffffff;
         }
 
         .btn-download {
@@ -97,23 +112,23 @@
             color: #ffffff;
         }
 
-        /* Stage Box */
+        /* Stage Box Optimized for Mobile and Desktop */
         #flipbook-stage {
-            width: 95vw;
-            height: 88vh;
+            width: 96vw;
+            height: 85vh;
             max-width: 1550px;
             max-height: 920px;
-            box-shadow: 0px 20px 50px rgba(0,0,0,0.35);
+            box-shadow: 0px 20px 50px rgba(0,0,0,0.5);
             background-color: var(--inner-bg);
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             transition: background-color 0.3s ease;
-            padding: 15px 45px;
+            padding: 10px 30px;
             overflow: hidden;
-            margin-top: 25px;
+            margin-top: 35px;
         }
 
         #book-wrapper {
@@ -134,13 +149,13 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             z-index: 999;
             display: flex;
@@ -153,11 +168,10 @@
         .nav-btn:hover {
             background: rgba(255, 255, 255, 0.95);
             color: #111;
-            transform: translateY(-50%) scale(1.1);
         }
 
-        #prev-btn { left: 10px; }
-        #next-btn { right: 10px; }
+        #prev-btn { left: 8px; }
+        #next-btn { right: 8px; }
 
         /* Loading Screen */
         #loading-screen {
@@ -165,10 +179,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             color: #ffffff;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 1px;
             text-align: center;
         }
@@ -177,8 +191,8 @@
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid #ffffff;
             border-radius: 50%;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
 
@@ -191,18 +205,27 @@
             box-shadow: 0 6px 22px rgba(0,0,0,0.28);
             background-color: #ffffff;
         }
+
+        @media (max-width: 768px) {
+            #flipbook-stage {
+                width: 98vw;
+                height: 82vh;
+                padding: 5px 15px;
+            }
+            .nav-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- Control Panel -->
     <div id="control-panel">
-        <div class="control-group">
-            <span>Outer Background:</span>
-            <button class="btn-theme" onclick="setOuterBg('#ffffff')">White</button>
-            <button class="btn-theme" onclick="setOuterBg('#5ca595')">Teal</button>
-            <button class="btn-theme" onclick="setOuterBg('#1a1a1a')">Dark</button>
-        </div>
+        <!-- Home Button -->
+        <a href="../" class="btn-theme btn-home">← Home</a>
 
         <div class="control-panel-divider"></div>
 
@@ -216,7 +239,7 @@
         <div class="control-panel-divider"></div>
 
         <!-- Download PDF Button -->
-        <button class="btn-theme btn-download" onclick="downloadPDF()">📥 Download PDF</button>
+        <button class="btn-theme btn-download" onclick="downloadPDF()">📥 Download</button>
 
         <button class="btn-theme" onclick="toggleFullscreen()">⛶ Fullscreen</button>
     </div>
@@ -238,12 +261,13 @@
     </div>
 
     <script>
-        // Set Default PDF Download Name per Brochure
-        const downloadName = "Cranial-Maxillofacial Implants and Instruments Brochure.pdf";
-
-        function setOuterBg(color) {
-            document.documentElement.style.setProperty('--outer-bg', color);
-        }
+        // Set Default PDF Download Name per Folder:
+        // arthroscopy/index.html -> "Arthroscopy Implants and Instruments.pdf"
+        // cranial-maxillofacial/index.html -> "Cranial-Maxillofacial Implants and Instruments.pdf"
+        // hip-replacement/index.html -> "Hip Replacement Implants and Instruments.pdf"
+        // spine-implants/index.html -> "Spine Implants & Instruments.pdf"
+        // trauma-implants/index.html -> "Trauma Implants.pdf"
+        const downloadName = "Cranial-Maxillofacial Implants and Instruments.pdf";
 
         function setInnerBg(color) {
             document.documentElement.style.setProperty('--inner-bg', color);
@@ -259,7 +283,6 @@
             }
         }
 
-        // Trigger PDF Download with brochure custom name
         function downloadPDF() {
             const link = document.createElement('a');
             link.href = './document.pdf';
@@ -295,8 +318,12 @@
                 const unscaledViewport = firstPage.getViewport({ scale: 1.0 });
 
                 const stage = document.getElementById('flipbook-stage');
-                const availHeight = stage.clientHeight - 30;
-                const availWidth = (stage.clientWidth - 80) / 2;
+                const isMobile = window.innerWidth <= 768;
+                
+                // Responsive sizing bounds
+                const availHeight = stage.clientHeight - 20;
+                // On mobile, show single page view for readability; on desktop, dual spread
+                const availWidth = isMobile ? (stage.clientWidth - 30) : ((stage.clientWidth - 60) / 2);
 
                 const scale = Math.min(availHeight / unscaledViewport.height, availWidth / unscaledViewport.width);
 
@@ -332,16 +359,18 @@
                 globalPageFlip = new St.PageFlip(bookContainer, {
                     width: displayWidth,
                     height: displayHeight,
-                    size: "fixed",
-                    minWidth: 280,
+                    size: isMobile ? "fixed" : "fixed",
+                    minWidth: 220,
                     maxWidth: 850,
-                    minHeight: 400,
+                    minHeight: 300,
                     maxHeight: 1200,
                     maxShadowOpacity: 0.45,
                     showCover: true,
                     mobileScrollSupport: false,
                     useMouse: true,
-                    flippingTime: 850
+                    flippingTime: 800,
+                    // Force single page on mobile screens for perfect readability
+                    display: isMobile ? "single" : "double"
                 });
 
                 globalPageFlip.loadFromHTML(document.querySelectorAll('.page-canvas'));
@@ -357,7 +386,7 @@
             } catch (error) {
                 console.error("PDF Loading Error: ", error);
                 document.getElementById('loading-screen').innerHTML = `
-                    <div style="color:#ff6b6b; font-size:13px; line-height:1.6;">
+                    <div style="color:#ff6b6b; font-size:12px; line-height:1.5;">
                         <strong>FAILED TO LOAD BROCHURE</strong><br/>
                         ${error.message || 'Check document.pdf in folder.'}
                     </div>
