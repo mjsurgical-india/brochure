@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- CHANGE TITLE PER FOLDER -->
+    <!-- UPDATE TITLE ACCORDING TO FOLDER -->
     <title>MJ Surgical - Hip Replacement Implants and Instruments</title>
 
     <!-- Page-Flip 3D Engine -->
@@ -13,8 +13,8 @@
 
     <style>
         :root {
-            --outer-bg: #1a1a1a;     /* Dark outer background default */
-            --inner-bg: #5ca595;     /* Teal inner stage default */
+            --outer-bg: #1a1a1a;
+            --inner-bg: #5ca595;
         }
 
         * {
@@ -37,7 +37,7 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Top Control Panel - Responsive & Scrollable on Mobile */
+        /* Top Bar Controls */
         #control-panel {
             position: absolute;
             top: 8px;
@@ -112,7 +112,7 @@
             color: #ffffff;
         }
 
-        /* Stage Box Optimized for Mobile and Desktop */
+        /* Responsive Stage Box */
         #flipbook-stage {
             width: 96vw;
             height: 85vh;
@@ -173,7 +173,7 @@
         #prev-btn { left: 8px; }
         #next-btn { right: 8px; }
 
-        /* Loading Screen */
+        /* Loading Spinner */
         #loading-screen {
             position: absolute;
             display: flex;
@@ -210,7 +210,7 @@
             #flipbook-stage {
                 width: 98vw;
                 height: 82vh;
-                padding: 5px 15px;
+                padding: 5px 12px;
             }
             .nav-btn {
                 width: 34px;
@@ -224,7 +224,6 @@
 
     <!-- Control Panel -->
     <div id="control-panel">
-        <!-- Home Button -->
         <a href="../" class="btn-theme btn-home">← Home</a>
 
         <div class="control-panel-divider"></div>
@@ -238,18 +237,15 @@
 
         <div class="control-panel-divider"></div>
 
-        <!-- Download PDF Button -->
         <button class="btn-theme btn-download" onclick="downloadPDF()">📥 Download</button>
-
         <button class="btn-theme" onclick="toggleFullscreen()">⛶ Fullscreen</button>
     </div>
 
-    <!-- Main Stage Box -->
+    <!-- Main Stage -->
     <div id="flipbook-stage">
         <button id="prev-btn" class="nav-btn" title="Previous Page">&#10094;</button>
         <button id="next-btn" class="nav-btn" title="Next Page">&#10095;</button>
 
-        <!-- Loading Screen -->
         <div id="loading-screen">
             <div class="spinner"></div>
             <span id="loading-text">LOADING BROCHURE...</span>
@@ -261,12 +257,12 @@
     </div>
 
     <script>
-        // Set Default PDF Download Name per Folder:
-        // arthroscopy/index.html -> "Arthroscopy Implants and Instruments.pdf"
-        // cranial-maxillofacial/index.html -> "Cranial-Maxillofacial Implants and Instruments.pdf"
-        // hip-replacement/index.html -> "Hip Replacement Implants and Instruments.pdf"
-        // spine-implants/index.html -> "Spine Implants & Instruments.pdf"
-        // trauma-implants/index.html -> "Trauma Implants.pdf"
+        // SET SPECIFIC DOWNLOAD FILENAME FOR EACH SUBFOLDER:
+        // arthroscopy/ -> "Arthroscopy Implants and Instruments.pdf"
+        // cranial-maxillofacial/ -> "Cranial-Maxillofacial Implants and Instruments.pdf"
+        // hip-replacement/ -> "Hip Replacement Implants and Instruments.pdf"
+        // spine-implants/ -> "Spine Implants & Instruments.pdf"
+        // trauma-implants/ -> "Trauma Implants.pdf"
         const downloadName = "Hip Replacement Implants and Instruments.pdf";
 
         function setInnerBg(color) {
@@ -320,9 +316,7 @@
                 const stage = document.getElementById('flipbook-stage');
                 const isMobile = window.innerWidth <= 768;
                 
-                // Responsive sizing bounds
                 const availHeight = stage.clientHeight - 20;
-                // On mobile, show single page view for readability; on desktop, dual spread
                 const availWidth = isMobile ? (stage.clientWidth - 30) : ((stage.clientWidth - 60) / 2);
 
                 const scale = Math.min(availHeight / unscaledViewport.height, availWidth / unscaledViewport.width);
@@ -359,7 +353,7 @@
                 globalPageFlip = new St.PageFlip(bookContainer, {
                     width: displayWidth,
                     height: displayHeight,
-                    size: isMobile ? "fixed" : "fixed",
+                    size: "fixed",
                     minWidth: 220,
                     maxWidth: 850,
                     minHeight: 300,
@@ -369,7 +363,6 @@
                     mobileScrollSupport: false,
                     useMouse: true,
                     flippingTime: 800,
-                    // Force single page on mobile screens for perfect readability
                     display: isMobile ? "single" : "double"
                 });
 
